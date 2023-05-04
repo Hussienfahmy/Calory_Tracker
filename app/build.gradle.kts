@@ -55,6 +55,7 @@ dependencies {
     debugImplementation(Compose.uiTooling)
     implementation(Compose.hiltNavigationCompose)
     implementation(Compose.material)
+    implementation(Compose.materialWindowSizeClass)
     implementation(Compose.runtime)
     implementation(Compose.navigation)
     implementation(Compose.viewModelCompose)
