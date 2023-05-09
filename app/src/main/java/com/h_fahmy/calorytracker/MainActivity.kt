@@ -19,6 +19,8 @@ import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
 import com.h_fahmy.onboarding_presentation.age.AgeScreen
 import com.h_fahmy.onboarding_presentation.gender.GenderScreen
+import com.h_fahmy.onboarding_presentation.height.HeightScreen
+import com.h_fahmy.onboarding_presentation.weight.WeightScreen
 import com.h_fahmy.onboarding_presentation.welcome.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,10 +62,16 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.HEIGHT) {
-
+                            HeightScreen(
+                                onNavigate = navController::navigate,
+                                snackBarHostState = snackBarHostState
+                            )
                         }
                         composable(Route.WEIGHT) {
-
+                            WeightScreen(
+                                onNavigate = navController::navigate,
+                                snackBarHostState = snackBarHostState
+                            )
                         }
                         composable(Route.NUTRIENT_GOAL) {
 

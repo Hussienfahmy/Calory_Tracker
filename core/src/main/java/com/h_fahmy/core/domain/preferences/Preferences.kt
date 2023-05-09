@@ -16,7 +16,7 @@ interface Preferences {
 
     suspend fun saveHeight(height: Int)
 
-    suspend fun saveWeight(weight: Int)
+    suspend fun saveWeight(weight: Float)
 
     suspend fun saveActivityLevel(activityLevel: ActivityLevel)
 
