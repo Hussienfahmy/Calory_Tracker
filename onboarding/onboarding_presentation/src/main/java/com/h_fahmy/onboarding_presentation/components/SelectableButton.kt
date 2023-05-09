@@ -24,8 +24,9 @@ fun SelectableButton(
     modifier: Modifier = Modifier,
     text: String,
     selected: Boolean,
-    color: Color,
-    selectedTextColor: Color,
+    color: Color = MaterialTheme.colorScheme.onPrimary,
+    selectedTextColor: Color = MaterialTheme.colorScheme.secondary,
+    borderColor: Color = MaterialTheme.colorScheme.tertiary,
     onClick: () -> Unit,
     textStyle: TextStyle = MaterialTheme.typography.labelLarge
 ) {
@@ -35,7 +36,7 @@ fun SelectableButton(
             .clip(RoundedCornerShape(100.dp))
             .border(
                 width = 2.dp,
-                color = color,
+                color = borderColor,
                 shape = RoundedCornerShape(100.dp)
             )
             .background(
@@ -62,8 +63,6 @@ fun SelectableButtonSelectedPreview() {
         SelectableButton(
             text = "Button",
             selected = true,
-            color = MaterialTheme.colorScheme.onPrimary,
-            selectedTextColor = MaterialTheme.colorScheme.secondary,
             onClick = { })
     }
 }
@@ -78,8 +77,6 @@ fun SelectableButtonNotSelectedPreview() {
         SelectableButton(
             text = "Button",
             selected = false,
-            color = MaterialTheme.colorScheme.onPrimary,
-            selectedTextColor = MaterialTheme.colorScheme.secondary,
             onClick = { })
     }
 }
