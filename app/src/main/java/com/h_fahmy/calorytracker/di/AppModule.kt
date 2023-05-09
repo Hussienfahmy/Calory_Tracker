@@ -3,6 +3,7 @@ package com.h_fahmy.calorytracker.di
 import android.content.Context
 import com.h_fahmy.core.data.preferences.UserInfoDataStore
 import com.h_fahmy.core.domain.preferences.Preferences
+import com.h_fahmy.core.domain.use_case.FilterOutDigits
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +20,7 @@ object AppModule {
     fun providePresences(@ApplicationContext context: Context): Preferences =
         UserInfoDataStore.create(context)
 
+    @Provides
+    @Singleton
+    fun provideFilterOutDigitsUseCase() = FilterOutDigits()
 }
