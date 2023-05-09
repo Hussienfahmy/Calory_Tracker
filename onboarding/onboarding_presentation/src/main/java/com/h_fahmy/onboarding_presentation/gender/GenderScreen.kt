@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.model.Gender
-import com.h_fahmy.core.util.UiEvent
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
 import com.h_fahmy.onboarding_presentation.components.SelectableButton
 

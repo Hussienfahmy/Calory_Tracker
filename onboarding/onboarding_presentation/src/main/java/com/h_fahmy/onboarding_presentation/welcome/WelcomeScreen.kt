@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.h_fahmy.core.navigation.Route
-import com.h_fahmy.core.util.UiEvent
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
 import com.h_fahmy.calorytracker.core.R as CoreR
 

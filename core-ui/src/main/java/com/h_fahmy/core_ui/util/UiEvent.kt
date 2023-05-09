@@ -1,4 +1,4 @@
-package com.h_fahmy.core.util
+package com.h_fahmy.core_ui.util
 
 sealed class UiEvent {
     data class Navigate(val route: String) : UiEvent()
