@@ -4,6 +4,7 @@ apply {
 
 plugins {
     id("com.android.library")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -11,5 +12,6 @@ android {
 }
 
 dependencies {
-
+    "implementation"(Kotlin.serialization)
+    "implementation"(AndroidX.dataStore)
 }
