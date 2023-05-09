@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.util.BaseLightPreview
 
 @Composable
 fun SelectableButton(
@@ -54,10 +54,10 @@ fun SelectableButton(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun SelectableButtonSelectedPreview() {
-    Surface(
+    BaseLightPreview(
         modifier = Modifier.padding(16.dp)
     ) {
         SelectableButton(
@@ -68,10 +68,10 @@ fun SelectableButtonSelectedPreview() {
 }
 
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun SelectableButtonNotSelectedPreview() {
-    Surface(
+    BaseLightPreview(
         modifier = Modifier.padding(16.dp)
     ) {
         SelectableButton(

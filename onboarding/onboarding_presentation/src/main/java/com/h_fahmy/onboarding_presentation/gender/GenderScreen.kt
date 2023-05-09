@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.model.Gender
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
 import com.h_fahmy.onboarding_presentation.components.SelectableButton
@@ -103,12 +102,10 @@ fun GenderScreenContent(
     }
 }
 
-@Preview
+@Preview(uiMode = android.content.res.Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun GenderScreenPreview() {
-    Surface(
-        modifier = Modifier.padding(16.dp)
-    ) {
+    BaseLightPreview {
         GenderScreenContent(
             selectedGender = Gender.Male,
             onGenderSelected = {},

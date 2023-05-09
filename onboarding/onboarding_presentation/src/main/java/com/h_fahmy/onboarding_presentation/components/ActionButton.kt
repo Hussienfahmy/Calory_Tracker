@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,6 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.util.BaseLightPreview
 
 @Composable
 fun ActionButton(
@@ -39,9 +39,7 @@ fun ActionButton(
 @Preview(showBackground = true)
 @Composable
 fun ActionButtonPreview() {
-    Surface(
-        modifier = Modifier.padding(16.dp)
-    ) {
+    BaseLightPreview(modifier = Modifier.padding(10.dp)) {
         ActionButton(text = "Next", onClick = { })
     }
 }
