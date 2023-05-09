@@ -1,4 +1,4 @@
-package com.h_fahmy.calorytracker.ui.theme
+package com.h_fahmy.core_ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

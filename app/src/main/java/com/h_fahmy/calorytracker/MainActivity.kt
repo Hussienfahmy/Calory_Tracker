@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.h_fahmy.calorytracker.navigation.navigate
-import com.h_fahmy.calorytracker.ui.theme.CaloryTrackerTheme
 import com.h_fahmy.core.navigation.Route
+import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
 import com.h_fahmy.onboarding_presentation.gender.GenderScreen
 import com.h_fahmy.onboarding_presentation.welcome.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
