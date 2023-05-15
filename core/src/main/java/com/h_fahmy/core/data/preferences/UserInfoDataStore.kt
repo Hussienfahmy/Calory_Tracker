@@ -37,7 +37,7 @@ class UserInfoDataStore(
         }
     }
 
-    override suspend fun saveWeight(weight: Int) {
+    override suspend fun saveWeight(weight: Float) {
         dataStore.updateData {
             it.copy(weight = weight)
         }
