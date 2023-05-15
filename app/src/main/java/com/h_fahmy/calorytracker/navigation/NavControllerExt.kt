@@ -7,5 +7,6 @@ fun NavHostController.navigate(event: UiEvent) {
     when (event) {
         is UiEvent.Navigate -> navigate(event.route)
         UiEvent.NavigateUp -> navigateUp()
+        else -> Unit
     }
 }
