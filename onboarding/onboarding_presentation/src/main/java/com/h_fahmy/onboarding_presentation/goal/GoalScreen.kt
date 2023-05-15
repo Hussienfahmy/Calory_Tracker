@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.model.GoalType
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.UiEventHandler
 import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
@@ -30,15 +30,10 @@ fun GoalScreen(
     onNavigate: (UiEvent) -> Unit,
     viewModel: GoalViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.Navigate -> onNavigate(event)
-                else -> {/* ignore */
-                }
-            }
-        }
-    }
+    UiEventHandler(
+        onNavigate = onNavigate,
+        uiEvent = viewModel.uiEvent,
+    )
 
     GoalScreenContent(
         onNextClick = { viewModel.onNextClick() },

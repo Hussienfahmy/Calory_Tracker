@@ -10,16 +10,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.UiEventHandler
 import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
@@ -31,22 +30,12 @@ fun HeightScreen(
     viewModel: HeightViewModel = hiltViewModel(),
     snackBarHostState: SnackbarHostState,
 ) {
-    val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        viewModel.uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.Navigate -> onNavigate(event)
-                is UiEvent.ShowSnackBar -> {
-                    snackBarHostState.showSnackbar(
-                        message = event.message.asString(context = context)
-                    )
-                }
-
-                else -> Unit
-            }
-        }
-    }
+    UiEventHandler(
+        onNavigate = onNavigate,
+        uiEvent = viewModel.uiEvent,
+        snackBarHostState = snackBarHostState
+    )
 
     HeightScreenContent(
         onHeightChange = { viewModel.onHeightEnter(it) },
