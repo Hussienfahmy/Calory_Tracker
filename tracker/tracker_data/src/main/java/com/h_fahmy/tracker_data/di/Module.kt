@@ -1,9 +1,13 @@
 package com.h_fahmy.tracker_data.di
 
+import android.content.Context
+import androidx.room.Room
+import com.h_fahmy.tracker_data.local.TrackerDatabase
 import com.h_fahmy.tracker_data.remote.OpenFoodAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,4 +37,14 @@ object Module {
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
         .create(OpenFoodAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTrackerDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,
+        TrackerDatabase::class.java,
+        "tracker_db"
+    ).build()
 }
