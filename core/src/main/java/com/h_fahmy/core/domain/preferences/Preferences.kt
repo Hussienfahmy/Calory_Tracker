@@ -29,4 +29,6 @@ interface Preferences {
     suspend fun saveFatRatio(ratio: Float)
 
     suspend fun loadUserInfo(): UserInfo
+
+    suspend fun saveShouldShowOnBoarding(shouldShowOnBoarding: Boolean)
 }

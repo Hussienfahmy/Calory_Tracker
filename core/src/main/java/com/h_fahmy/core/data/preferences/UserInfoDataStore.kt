@@ -77,6 +77,12 @@ class UserInfoDataStore(
         return dataStore.data.first()
     }
 
+    override suspend fun saveShouldShowOnBoarding(shouldShowOnBoarding: Boolean) {
+        dataStore.updateData {
+            it.copy(shouldShowOnBoarding = shouldShowOnBoarding)
+        }
+    }
+
     companion object {
         private val Context.dataStore by dataStore("user_info", UserInfoSerializer)
 

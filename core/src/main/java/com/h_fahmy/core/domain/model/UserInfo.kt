@@ -12,5 +12,6 @@ data class UserInfo(
     val goalType: GoalType = GoalType.LoseWeight,
     val carbRatio: Float = 0.5f,
     val proteinRatio: Float = 0.3f,
-    val fatRatio: Float = 0.2f
+    val fatRatio: Float = 0.2f,
+    val shouldShowOnBoarding: Boolean = true
 )
