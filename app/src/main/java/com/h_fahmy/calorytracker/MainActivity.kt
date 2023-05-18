@@ -25,6 +25,7 @@ import com.h_fahmy.onboarding_presentation.height.HeightScreen
 import com.h_fahmy.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.h_fahmy.onboarding_presentation.weight.WeightScreen
 import com.h_fahmy.onboarding_presentation.welcome.WelcomeScreen
+import com.h_fahmy.tracker_presentation.tracker_overview.TrackerOverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,7 +90,7 @@ class MainActivity : ComponentActivity() {
                             GoalScreen(onNavigate = navController::navigate)
                         }
                         composable(Route.TRACKER_OVERVIEW) {
-
+                            TrackerOverviewScreen(onNavigate = navController::navigate)
                         }
                         composable(Route.SEARCH) {
 
