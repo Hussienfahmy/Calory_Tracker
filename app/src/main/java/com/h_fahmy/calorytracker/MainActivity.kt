@@ -11,9 +11,12 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.h_fahmy.calorytracker.navigation.navigate
 import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
@@ -25,6 +28,7 @@ import com.h_fahmy.onboarding_presentation.height.HeightScreen
 import com.h_fahmy.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.h_fahmy.onboarding_presentation.weight.WeightScreen
 import com.h_fahmy.onboarding_presentation.welcome.WelcomeScreen
+import com.h_fahmy.tracker_presentation.search.SearchScreen
 import com.h_fahmy.tracker_presentation.tracker_overview.TrackerOverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,11 +45,11 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
-                ) {
+                ) { paddingValues ->
                     NavHost(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(it),
+                            .padding(paddingValues),
                         navController = navController, startDestination = Route.WELCOME
                     ) {
                         composable(Route.WELCOME) {
@@ -92,8 +96,29 @@ class MainActivity : ComponentActivity() {
                         composable(Route.TRACKER_OVERVIEW) {
                             TrackerOverviewScreen(onNavigate = navController::navigate)
                         }
-                        composable(Route.SEARCH) {
+                        composable(
+                            route = Route.SEARCH + "/{mealNameResId}/{dayOfMonth}/{month}/{year}",
+                            arguments = listOf(
+                                navArgument("mealNameResId") { type = NavType.IntType },
+                                navArgument("dayOfMonth") { type = NavType.IntType },
+                                navArgument("month") { type = NavType.IntType },
+                                navArgument("year") { type = NavType.IntType }
+                            )
+                        ) {
+                            val mealNameResId = it.arguments?.getInt("mealNameResId")!!
+                            val mealName = stringResource(id = mealNameResId)
+                            val dayOfMonth = it.arguments?.getInt("dayOfMonth")!!
+                            val month = it.arguments?.getInt("month")!!
+                            val year = it.arguments?.getInt("year")!!
 
+                            SearchScreen(
+                                onNavigateUp = { navController.navigateUp() },
+                                mealName = mealName,
+                                dayOfMonth = dayOfMonth,
+                                month = month,
+                                year = year,
+                                snackBarHostState = snackBarHostState
+                            )
                         }
                     }
                 }

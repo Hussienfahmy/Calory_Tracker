@@ -55,7 +55,7 @@ class SearchViewModel @Inject constructor(
                 )
             }
 
-            is SearchEvent.OnSearchClick -> {
+            is SearchEvent.OnSearch -> {
                 executeSearch()
             }
 
