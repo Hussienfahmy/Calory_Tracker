@@ -22,7 +22,7 @@ fun UnitDisplay(
     modifier: Modifier = Modifier,
     unit: String,
     amount: Int,
-    textColor: Color,
+    textColor: Color = MaterialTheme.colorScheme.tertiary,
     amountTextSize: TextUnit = 20.sp,
     unitTextSize: TextUnit = 14.sp,
 ) {
