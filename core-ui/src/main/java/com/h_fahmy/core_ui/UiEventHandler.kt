@@ -12,13 +12,16 @@ import kotlinx.coroutines.flow.Flow
  */
 @Composable
 fun UiEventHandler(
+    key: Any? = Unit,
     onNavigate: (UiEvent.Navigate) -> Unit,
     uiEvent: Flow<UiEvent>,
     snackBarHostState: SnackbarHostState? = null,
+    onShowSnackBar: () -> Unit = {},
+    onNavigateUp: () -> Unit = {},
 ) {
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key) {
         uiEvent.collect { event ->
             when (event) {
                 is UiEvent.Navigate -> onNavigate(event)
@@ -26,9 +29,10 @@ fun UiEventHandler(
                     snackBarHostState?.showSnackbar(
                         message = event.message.asString(context = context)
                     )
+                    onShowSnackBar()
                 }
 
-                else -> Unit
+                is UiEvent.NavigateUp -> onNavigateUp()
             }
         }
     }
