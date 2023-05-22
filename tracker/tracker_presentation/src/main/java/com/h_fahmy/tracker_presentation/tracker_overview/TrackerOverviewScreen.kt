@@ -13,11 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.UiEventHandler
+import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.core_ui.util.UiEvent
+import com.h_fahmy.tracker_domain.model.TrackedFood
 import com.h_fahmy.tracker_presentation.tracker_overview.components.AddButton
 import com.h_fahmy.tracker_presentation.tracker_overview.components.DaySelector
 import com.h_fahmy.tracker_presentation.tracker_overview.components.ExpandableMeal
@@ -29,11 +32,31 @@ fun TrackerOverviewScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: TrackerOverviewViewModel = hiltViewModel(),
 ) {
-    val spacing = LocalSpacing.current
     val state = viewModel.state
-    val context = LocalContext.current
 
     UiEventHandler(onNavigate = onNavigate, uiEvent = viewModel.uiEvent)
+
+    TrackerOverviewContent(
+        onPreviousDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnPreviousDayClicked) },
+        onNextDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnNextDayClicked) },
+        onToggleMealClicked = { viewModel.onEvent(TrackerOverviewEvent.OnToggleMealClicked(it)) },
+        onDeleteFoodClicked = { viewModel.onEvent(TrackerOverviewEvent.DeleteTrackedFood(it)) },
+        onAddMealClicked = { viewModel.onEvent(TrackerOverviewEvent.OnAddFoodClicked(it)) },
+        state = state,
+    )
+}
+
+@Composable
+private fun TrackerOverviewContent(
+    onPreviousDayClick: () -> Unit,
+    onNextDayClick: () -> Unit,
+    onToggleMealClicked: (Meal) -> Unit,
+    onDeleteFoodClicked: (TrackedFood) -> Unit,
+    onAddMealClicked: (Meal) -> Unit,
+    state: TrackerOverviewState,
+) {
+    val spacing = LocalSpacing.current
+    val context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier
@@ -47,8 +70,8 @@ fun TrackerOverviewScreen(
 
             DaySelector(
                 date = state.date,
-                onPreviousDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnPreviousDayClicked) },
-                onNextDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnNextDayClicked) },
+                onPreviousDayClick = onPreviousDayClick,
+                onNextDayClick = onNextDayClick,
                 modifier = Modifier.padding(horizontal = spacing.spaceMedium)
             )
 
@@ -61,7 +84,7 @@ fun TrackerOverviewScreen(
                     .fillMaxWidth()
                     .padding(horizontal = spacing.spaceSmall),
                 meal = meal,
-                onToggleClick = { viewModel.onEvent(TrackerOverviewEvent.OnToggleMealClicked(meal)) }
+                onToggleClick = { onToggleMealClicked(meal) }
             ) {
                 Column(
                     modifier = Modifier
@@ -71,11 +94,7 @@ fun TrackerOverviewScreen(
                     state.trackedFoods.forEach { trackedFood ->
                         TrackedFoodItem(
                             trackedFood = trackedFood,
-                            onDeleteClicked = {
-                                viewModel.onEvent(
-                                    TrackerOverviewEvent.DeleteTrackedFood(trackedFood)
-                                )
-                            }
+                            onDeleteClicked = { onDeleteFoodClicked(trackedFood) }
                         )
 
                         Spacer(modifier = Modifier.height(spacing.spaceMedium))
@@ -86,7 +105,7 @@ fun TrackerOverviewScreen(
                             id = R.string.add_meal,
                             meal.name.asString(context)
                         ),
-                        onClick = { viewModel.onEvent(TrackerOverviewEvent.OnAddFoodClicked(meal)) },
+                        onClick = { onAddMealClicked(meal) },
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -98,5 +117,29 @@ fun TrackerOverviewScreen(
                 Spacer(modifier = Modifier.height(spacing.spaceMedium))
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TrackerOverviewContentPreview() {
+    BaseLightPreview {
+        TrackerOverviewContent(
+            onPreviousDayClick = { },
+            onNextDayClick = { },
+            onToggleMealClicked = {},
+            onDeleteFoodClicked = {},
+            onAddMealClicked = {},
+            state = TrackerOverviewState(
+                totalCalories = 1000,
+                totalCarbs = 400,
+                totalFat = 900,
+                totalProtein = 700,
+                carbsGoal = 500,
+                fatGoal = 1000,
+                proteinGoal = 1000,
+                caloriesGoal = 2500,
+            )
+        )
     }
 }
