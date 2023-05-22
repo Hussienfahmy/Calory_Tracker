@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.LocalSpacing
+import com.h_fahmy.core_ui.UiEventHandler
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.tracker_presentation.tracker_overview.components.AddButton
 import com.h_fahmy.tracker_presentation.tracker_overview.components.DaySelector
@@ -31,6 +32,8 @@ fun TrackerOverviewScreen(
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
+
+    UiEventHandler(onNavigate = onNavigate, uiEvent = viewModel.uiEvent)
 
     LazyColumn(
         modifier = Modifier
