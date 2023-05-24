@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface OpenFoodAPI {
 
-    @GET("cgi/search.pl?search_simple=1&action=process&json=1&fields=product_name,nutriment,image_front_thumb_url")
+    @GET("cgi/search.pl?search_simple=1&action=process&json=1&fields=product_name,nutriments,image_front_thumb_url")
     suspend fun search(
         @Query("search_terms") searchTerms: String,
         @Query("page") page: Int,
