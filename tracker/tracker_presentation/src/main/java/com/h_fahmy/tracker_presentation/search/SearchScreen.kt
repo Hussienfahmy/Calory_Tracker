@@ -58,11 +58,15 @@ fun SearchScreen(
     SearchScreenContent(
         mealName = mealName,
         searchText = state.query,
+        isHintVisible = state.isHintVisible,
         trackableFood = state.trackableFood,
         isSearching = state.isSearching,
         isNoResult = state.trackableFood.isEmpty(),
         onSearchTextChange = { viewModel.onEvent(SearchEvent.OnQueryChange(it)) },
-        onSearch = { viewModel.onEvent(SearchEvent.OnSearch) },
+        onSearch = {
+            keyboardController?.hide()
+            viewModel.onEvent(SearchEvent.OnSearch)
+        },
         onSearchFocusChange = { viewModel.onEvent(SearchEvent.OnSearchFocusChange(it)) },
         onClick = { viewModel.onEvent(SearchEvent.OnToggleTrackableFood(it)) },
         onAmountChange = { (trackableFood, amount) ->
@@ -74,6 +78,7 @@ fun SearchScreen(
             )
         },
         onTrack = {
+            keyboardController?.hide()
             viewModel.onEvent(
                 SearchEvent.OnTrackFoodClick(
                     food = it,
@@ -98,6 +103,7 @@ fun SearchScreenContent(
     trackableFood: List<TrackableFoodUiState>,
     isSearching: Boolean,
     isNoResult: Boolean,
+    isHintVisible: Boolean,
 ) {
     val spacing = LocalSpacing.current
 
@@ -115,6 +121,7 @@ fun SearchScreenContent(
 
         SearchTextField(
             text = searchText,
+            shouldShowHint = isHintVisible,
             onValueChange = onSearchTextChange,
             onSearch = onSearch,
             onFocusChange = { onSearchFocusChange(it.isFocused) }
@@ -197,6 +204,7 @@ fun SearchScreenContentPreview() {
             ),
             isSearching = false,
             isNoResult = false,
+            isHintVisible = true,
         )
     }
 }
