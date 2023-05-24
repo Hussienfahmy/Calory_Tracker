@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.h_fahmy.calorytracker.navigation.navigate
+import com.h_fahmy.core.domain.preferences.Preferences
 import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
 import com.h_fahmy.onboarding_presentation.activity.ActivityScreen
@@ -31,12 +32,21 @@ import com.h_fahmy.onboarding_presentation.welcome.WelcomeScreen
 import com.h_fahmy.tracker_presentation.search.SearchScreen
 import com.h_fahmy.tracker_presentation.tracker_overview.TrackerOverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var preferences: Preferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val shouldShowOnBoarding = runBlocking { preferences.loadShouldShowOnBoarding() }
+
         setContent {
             CaloryTrackerTheme(darkTheme = false) {
                 val navController = rememberNavController()
@@ -50,7 +60,8 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues),
-                        navController = navController, startDestination = Route.WELCOME
+                        navController = navController,
+                        startDestination = if (shouldShowOnBoarding) Route.WELCOME else Route.TRACKER_OVERVIEW
                     ) {
                         composable(Route.WELCOME) {
                             WelcomeScreen(

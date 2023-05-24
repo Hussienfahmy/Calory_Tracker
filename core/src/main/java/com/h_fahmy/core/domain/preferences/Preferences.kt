@@ -31,4 +31,6 @@ interface Preferences {
     suspend fun loadUserInfo(): UserInfo
 
     suspend fun saveShouldShowOnBoarding(shouldShowOnBoarding: Boolean)
+
+    suspend fun loadShouldShowOnBoarding(): Boolean
 }

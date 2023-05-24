@@ -83,6 +83,10 @@ class UserInfoDataStore(
         }
     }
 
+    override suspend fun loadShouldShowOnBoarding(): Boolean {
+        return dataStore.data.first().shouldShowOnBoarding
+    }
+
     companion object {
         private val Context.dataStore by dataStore("user_info", UserInfoSerializer)
 
