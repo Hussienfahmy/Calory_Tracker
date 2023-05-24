@@ -93,7 +93,7 @@ fun TrackableFoodItem(
                 Column(modifier = Modifier.align(Alignment.CenterVertically)) {
                     Text(
                         text = food.name,
-                        style = MaterialTheme.typography.displayLarge,
+                        style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -102,7 +102,7 @@ fun TrackableFoodItem(
 
                     Text(
                         text = stringResource(id = R.string.kcal_per_100g, food.caloriesPer100g),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 }
             }
