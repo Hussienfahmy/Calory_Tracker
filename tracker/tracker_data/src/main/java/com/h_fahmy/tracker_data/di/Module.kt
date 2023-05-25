@@ -16,6 +16,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,6 +31,9 @@ object Module {
                 level = HttpLoggingInterceptor.Level.BODY
             }
         )
+        .readTimeout(30.seconds.toJavaDuration())
+        .writeTimeout(30.seconds.toJavaDuration())
+        .connectTimeout(30.seconds.toJavaDuration())
         .build()
 
     @Provides
