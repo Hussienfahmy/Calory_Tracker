@@ -9,14 +9,18 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.h_fahmy.calorytracker.navigation.AppBottomNavigation
 import com.h_fahmy.calorytracker.navigation.Route
+import com.h_fahmy.calorytracker.navigation.navigateWithClearBackStack
 import com.h_fahmy.core.domain.preferences.Preferences
 import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
 import com.h_fahmy.onboarding_presentation.activity.ActivityScreen
@@ -49,10 +53,23 @@ class MainActivity : ComponentActivity() {
             CaloryTrackerTheme(darkTheme = false) {
                 val navController = rememberNavController()
                 val snackBarHostState = remember { SnackbarHostState() }
+                val currentDestination by navController.currentBackStackEntryAsState()
+                val currentRoute = currentDestination?.destination?.route
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
+                    snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
+                    bottomBar = {
+                        if (currentRoute != null) {
+                            AppBottomNavigation(
+                                currentDestination = currentRoute,
+                                onTrackerOverviewClick = {
+                                    navController.navigateWithClearBackStack(Route.TRACKER_OVERVIEW)
+                                },
+                                onProfileClick = { navController.navigateWithClearBackStack(Route.PROFILE) }
+                            )
+                        }
+                    }
                 ) { paddingValues ->
                     NavHost(
                         modifier = Modifier
@@ -147,6 +164,10 @@ class MainActivity : ComponentActivity() {
                                 year = year,
                                 snackBarHostState = snackBarHostState
                             )
+                        }
+
+                        composable(Route.PROFILE) {
+
                         }
                     }
                 }

@@ -12,4 +12,6 @@ object Route {
 
     const val TRACKER_OVERVIEW = "tracker_overview"
     const val SEARCH = "search"
+
+    const val PROFILE: String = "profile"
 }
