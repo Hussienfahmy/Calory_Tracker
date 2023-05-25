@@ -1,3 +1,8 @@
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3Api::class
+)
+
 package com.h_fahmy.tracker_presentation.search.components
 
 import androidx.compose.animation.AnimatedVisibility
@@ -13,21 +18,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.res.stringResource
@@ -40,12 +49,14 @@ import androidx.compose.ui.unit.sp
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.modifier_ext.borderLineBottom
+import com.h_fahmy.core_ui.util.BaseDarkPreview
 import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.tracker_domain.model.TrackableFood
 import com.h_fahmy.tracker_presentation.search.TrackableFoodUiState
 import com.h_fahmy.tracker_presentation.tracker_overview.components.NutrientInfo
 import com.h_fahmy.tracker_presentation.tracker_overview.util.rememberAsyncImagePainter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackableFoodItem(
     trackableFoodUiState: TrackableFoodUiState,
@@ -90,7 +101,10 @@ fun TrackableFoodItem(
 
                 Spacer(modifier = Modifier.width(spacing.spaceMedium))
 
-                Column(modifier = Modifier.align(Alignment.CenterVertically)) {
+                Column(
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Text(
                         text = food.name,
                         style = MaterialTheme.typography.bodyLarge,
@@ -150,7 +164,13 @@ fun TrackableFoodItem(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Row {
-                    BasicTextField(
+                    OutlinedTextField(
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            unfocusedBorderColor = Color.Transparent,
+                            focusedBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent,
+                            errorBorderColor = Color.Transparent
+                        ),
                         value = trackableFoodUiState.amount,
                         onValueChange = onAmountChange,
                         keyboardOptions = KeyboardOptions(
@@ -168,19 +188,20 @@ fun TrackableFoodItem(
                             }
                         ),
                         singleLine = true,
+                        trailingIcon = {
+                            Text(
+                                text = stringResource(id = R.string.grams),
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.alignBy(LastBaseline)
+                            )
+                        },
                         modifier = Modifier
+                            .widthIn(50.dp)
                             .padding(end = spacing.spaceExtraSmall)
                             .borderLineBottom(
                                 MaterialTheme.colorScheme.onSurface
                             )
                             .alignBy(LastBaseline)
-                    )
-
-                    Spacer(modifier = Modifier.width(spacing.spaceExtraSmall))
-
-                    Text(
-                        text = stringResource(id = R.string.grams),
-                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
@@ -201,8 +222,32 @@ fun TrackableFoodItem(
 
 @Preview(showBackground = true)
 @Composable
-fun TrackableFoodItemPreview() {
+fun TrackableFoodItemLightPreview() {
     BaseLightPreview(modifier = Modifier.padding(16.dp)) {
+        TrackableFoodItem(
+            trackableFoodUiState = TrackableFoodUiState(
+                amount = "100",
+                isExpanded = true,
+                food = TrackableFood(
+                    name = "Burger",
+                    imageUrl = null,
+                    caloriesPer100g = 100,
+                    carbsPer100g = 10,
+                    fatPer100g = 10,
+                    proteinPer100g = 10,
+                )
+            ),
+            onClick = {},
+            onAmountChange = {},
+            onTrack = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TrackableFoodItemDarkPreview() {
+    BaseDarkPreview(modifier = Modifier.padding(16.dp)) {
         TrackableFoodItem(
             trackableFoodUiState = TrackableFoodUiState(
                 amount = "100",
