@@ -3,11 +3,9 @@ package com.h_fahmy.tracker_presentation.tracker_overview
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.h_fahmy.core.domain.preferences.Preferences
-import com.h_fahmy.core.navigation.Route
-import com.h_fahmy.core_ui.util.UiEvent
-import com.h_fahmy.core_ui.viewmodel.UiEventViewModel
 import com.h_fahmy.tracker_domain.use_case.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -20,7 +18,7 @@ import javax.inject.Inject
 class TrackerOverviewViewModel @Inject constructor(
     preferences: Preferences,
     private val trackerUseCases: TrackerUseCases,
-) : UiEventViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(TrackerOverviewState())
         private set
@@ -36,20 +34,6 @@ class TrackerOverviewViewModel @Inject constructor(
 
     fun onEvent(event: TrackerOverviewEvent) {
         when (event) {
-            is TrackerOverviewEvent.OnAddFoodClicked -> {
-                viewModelScope.launch {
-                    _uiEvent.send(
-                        UiEvent.Navigate(
-                            Route.SEARCH
-                                    + "/${event.meal.mealType.displayName}"
-                                    + "/${state.date.dayOfMonth}"
-                                    + "/${state.date.monthValue}"
-                                    + "/${state.date.year}"
-                        )
-                    )
-                }
-            }
-
             is TrackerOverviewEvent.DeleteTrackedFood -> {
                 viewModelScope.launch {
                     trackerUseCases.deleteTrackedFood(event.trackedFood)

@@ -20,19 +20,18 @@ import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.UiEventHandler
 import com.h_fahmy.core_ui.util.BaseLightPreview
-import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
 import com.h_fahmy.onboarding_presentation.components.UnitTextField
 
 @Composable
 fun AgeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    OnNextClick: () -> Unit,
     viewModel: AgeViewModel = hiltViewModel(),
     snackBarHostState: SnackbarHostState,
 ) {
 
     UiEventHandler(
-        onNavigate = onNavigate,
+        onSuccess = OnNextClick,
         uiEvent = viewModel.uiEvent,
         snackBarHostState = snackBarHostState
     )

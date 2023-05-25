@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.preferences.Preferences
 import com.h_fahmy.core.domain.use_case.FilterOutDigits
-import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.core_ui.util.UiText
 import com.h_fahmy.core_ui.viewmodel.UiEventViewModel
@@ -43,7 +42,7 @@ class AgeViewModel @Inject constructor(
                 return@launch
             }
             preferences.saveAge(ageNumber)
-            _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+            _uiEvent.send(UiEvent.Success)
         }
     }
 }

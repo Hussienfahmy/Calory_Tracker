@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.h_fahmy.core.domain.preferences.Preferences
 import com.h_fahmy.core.domain.use_case.FilterOutDigits
-import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.core_ui.viewmodel.UiEventViewModel
 import com.h_fahmy.onboarding_domain.use_case.ValidateNutrients
@@ -51,9 +50,7 @@ class NutrientGoalViewModel @Inject constructor(
                             preferences.saveCarbRatio(result.carbsRatio)
                             preferences.saveProteinRatio(result.proteinRatio)
                             preferences.saveFatRatio(result.fatRatio)
-                            _uiEvent.send(
-                                UiEvent.Navigate(Route.TRACKER_OVERVIEW)
-                            )
+                            _uiEvent.send(UiEvent.Success)
                         }
 
                         is ValidateNutrients.Result.Error -> {

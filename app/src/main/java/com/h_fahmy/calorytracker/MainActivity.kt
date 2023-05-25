@@ -11,15 +11,13 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.h_fahmy.calorytracker.navigation.navigate
+import com.h_fahmy.calorytracker.navigation.Route
 import com.h_fahmy.core.domain.preferences.Preferences
-import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
 import com.h_fahmy.onboarding_presentation.activity.ActivityScreen
 import com.h_fahmy.onboarding_presentation.age.AgeScreen
@@ -65,65 +63,84 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Route.WELCOME) {
                             WelcomeScreen(
-                                onNavigate = navController::navigate
+                                OnNextClick = {
+                                    navController.navigate(Route.AGE)
+                                }
                             )
                         }
 
                         composable(Route.AGE) {
                             AgeScreen(
                                 snackBarHostState = snackBarHostState,
-                                onNavigate = navController::navigate
+                                OnNextClick = {
+                                    navController.navigate(Route.GENDER)
+                                }
                             )
                         }
                         composable(Route.GENDER) {
                             GenderScreen(
-                                onNavigate = navController::navigate
+                                OnNextClick = {
+                                    navController.navigate(Route.HEIGHT)
+                                }
                             )
                         }
                         composable(Route.HEIGHT) {
                             HeightScreen(
-                                onNavigate = navController::navigate,
+                                OnNextClick = {
+                                    navController.navigate(Route.WEIGHT)
+                                },
                                 snackBarHostState = snackBarHostState
                             )
                         }
                         composable(Route.WEIGHT) {
                             WeightScreen(
-                                onNavigate = navController::navigate,
+                                OnNextClick = {
+                                    navController.navigate(Route.NUTRIENT_GOAL)
+                                },
                                 snackBarHostState = snackBarHostState
                             )
                         }
                         composable(Route.NUTRIENT_GOAL) {
                             NutrientGoalScreen(
-                                onNavigate = navController::navigate,
+                                OnNextClick = {
+                                    navController.navigate(Route.ACTIVITY)
+                                },
                                 snackBarHostState = snackBarHostState
                             )
                         }
                         composable(Route.ACTIVITY) {
-                            ActivityScreen(onNavigate = navController::navigate)
+                            ActivityScreen(OnNextClick = {
+                                navController.navigate(Route.GOAL)
+                            })
                         }
                         composable(Route.GOAL) {
-                            GoalScreen(onNavigate = navController::navigate)
+                            GoalScreen(OnNextClick = {
+                                navController.navigate(Route.TRACKER_OVERVIEW)
+                            })
                         }
                         composable(Route.TRACKER_OVERVIEW) {
-                            TrackerOverviewScreen(onNavigate = navController::navigate)
+                            TrackerOverviewScreen(onNavigateToSearch = { mealName, dayOfMonth, month, year ->
+                                navController.navigate(
+                                    Route.SEARCH + "/${mealName}/${dayOfMonth}/${month}/${year}"
+                                )
+                            })
                         }
                         composable(
-                            route = Route.SEARCH + "/{mealNameResId}/{dayOfMonth}/{month}/{year}",
+                            route = Route.SEARCH + "/{mealName}/{dayOfMonth}/{month}/{year}",
                             arguments = listOf(
-                                navArgument("mealNameResId") { type = NavType.IntType },
+                                navArgument("mealName") { type = NavType.StringType },
                                 navArgument("dayOfMonth") { type = NavType.IntType },
                                 navArgument("month") { type = NavType.IntType },
                                 navArgument("year") { type = NavType.IntType }
                             )
                         ) {
-                            val mealNameResId = it.arguments?.getInt("mealNameResId")!!
-                            val mealName = stringResource(id = mealNameResId)
+                            val mealName = it.arguments?.getString("mealName")!!
                             val dayOfMonth = it.arguments?.getInt("dayOfMonth")!!
                             val month = it.arguments?.getInt("month")!!
                             val year = it.arguments?.getInt("year")!!
 
                             SearchScreen(
-                                onNavigateUp = { navController.navigateUp() },
+                                onFoodTracked = { navController.navigateUp() },
                                 mealName = mealName,
                                 dayOfMonth = dayOfMonth,
                                 month = month,

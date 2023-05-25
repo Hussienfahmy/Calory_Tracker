@@ -17,9 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.LocalSpacing
-import com.h_fahmy.core_ui.UiEventHandler
 import com.h_fahmy.core_ui.util.BaseLightPreview
-import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.tracker_domain.model.TrackedFood
 import com.h_fahmy.tracker_presentation.tracker_overview.components.AddButton
 import com.h_fahmy.tracker_presentation.tracker_overview.components.DaySelector
@@ -29,19 +27,25 @@ import com.h_fahmy.tracker_presentation.tracker_overview.components.TrackedFoodI
 
 @Composable
 fun TrackerOverviewScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNavigateToSearch: (String, Int, Int, Int) -> Unit,
     viewModel: TrackerOverviewViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state
-
-    UiEventHandler(onNavigate = onNavigate, uiEvent = viewModel.uiEvent)
+    val context = LocalContext.current
 
     TrackerOverviewContent(
         onPreviousDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnPreviousDayClicked) },
         onNextDayClick = { viewModel.onEvent(TrackerOverviewEvent.OnNextDayClicked) },
         onToggleMealClicked = { viewModel.onEvent(TrackerOverviewEvent.OnToggleMealClicked(it)) },
         onDeleteFoodClicked = { viewModel.onEvent(TrackerOverviewEvent.DeleteTrackedFood(it)) },
-        onAddMealClicked = { viewModel.onEvent(TrackerOverviewEvent.OnAddFoodClicked(it)) },
+        onAddMealClicked = {
+            onNavigateToSearch(
+                it.name.asString(context),
+                state.date.dayOfMonth,
+                state.date.monthValue,
+                state.date.year
+            )
+        },
         state = state,
     )
 }

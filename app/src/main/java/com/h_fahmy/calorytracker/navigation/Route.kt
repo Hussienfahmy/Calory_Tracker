@@ -1,4 +1,4 @@
-package com.h_fahmy.core.navigation
+package com.h_fahmy.calorytracker.navigation
 
 object Route {
     const val WELCOME = "welcome"

@@ -35,7 +35,7 @@ import java.time.LocalDate
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    onNavigateUp: () -> Unit,
+    onFoodTracked: () -> Unit,
     mealName: String,
     dayOfMonth: Int,
     month: Int,
@@ -47,12 +47,11 @@ fun SearchScreen(
     val state = viewModel.state
 
     UiEventHandler(
-        onNavigate = {},
+        onSuccess = onFoodTracked,
         uiEvent = viewModel.uiEvent,
         key = keyboardController,
         snackBarHostState = snackBarHostState,
         onShowSnackBar = { keyboardController?.hide() },
-        onNavigateUp = onNavigateUp,
     )
 
     SearchScreenContent(

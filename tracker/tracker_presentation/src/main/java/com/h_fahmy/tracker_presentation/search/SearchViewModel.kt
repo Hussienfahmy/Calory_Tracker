@@ -34,7 +34,7 @@ class SearchViewModel @Inject constructor(
                     trackableFood = state.trackableFood.map { food ->
                         if (food.food == event.food) {
                             food.copy(
-                                amount = filterOutDigits(event.amount.toString())
+                                amount = filterOutDigits(event.amount)
                             )
                         } else {
                             food
@@ -104,7 +104,7 @@ class SearchViewModel @Inject constructor(
                 mealType = event.mealType,
                 date = event.date
             )
-            _uiEvent.send(UiEvent.NavigateUp)
+            _uiEvent.send(UiEvent.Success)
         }
     }
 }

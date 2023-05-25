@@ -14,16 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.h_fahmy.core.navigation.Route
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.util.BaseLightPreview
-import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
 import com.h_fahmy.calorytracker.core.R as CoreR
 
 @Composable
 fun WelcomeScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    OnNextClick: () -> Unit,
 ) {
     val spacing = LocalSpacing.current
 
@@ -45,7 +43,7 @@ fun WelcomeScreen(
         ActionButton(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = stringResource(id = CoreR.string.next),
-            onClick = { onNavigate(UiEvent.Navigate(Route.GENDER)) },
+            onClick = OnNextClick,
         )
     }
 }
@@ -55,7 +53,7 @@ fun WelcomeScreen(
 fun WelcomeScreenPreview() {
     BaseLightPreview {
         WelcomeScreen(
-            onNavigate = {}
+            OnNextClick = {}
         )
     }
 }

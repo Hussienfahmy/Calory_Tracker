@@ -21,17 +21,16 @@ import com.h_fahmy.core.domain.model.ActivityLevel
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.UiEventHandler
 import com.h_fahmy.core_ui.util.BaseLightPreview
-import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.onboarding_presentation.components.ActionButton
 import com.h_fahmy.onboarding_presentation.components.SelectableButton
 
 @Composable
 fun ActivityScreen(
-    onNavigate: (UiEvent) -> Unit,
+    OnNextClick: () -> Unit,
     viewModel: ActivityViewModel = hiltViewModel()
 ) {
     UiEventHandler(
-        onNavigate = onNavigate,
+        onSuccess = OnNextClick,
         uiEvent = viewModel.uiEvent,
     )
 
