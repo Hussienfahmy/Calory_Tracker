@@ -52,6 +52,8 @@ class MainActivity : ComponentActivity() {
         val shouldShowOnBoarding = runBlocking { viewModel.shouldShowOnBoarding() }
 
         setContent {
+            val localFocusManager = LocalFocusManager.current
+
             CaloryTrackerTheme(darkTheme = false) {
                 val navController = rememberNavController()
                 val snackBarHostState = remember { SnackbarHostState() }
@@ -59,7 +61,13 @@ class MainActivity : ComponentActivity() {
                 val currentRoute = currentDestination?.destination?.route
 
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .pointerInput(Unit) {
+                            detectTapGestures(onTap = {
+                                localFocusManager.clearFocus()
+                            })
+                        },
                     snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
                     bottomBar = {
                         if (currentRoute != null && when (currentRoute) {
