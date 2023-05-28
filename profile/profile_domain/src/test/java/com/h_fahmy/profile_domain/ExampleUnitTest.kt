@@ -1,4 +1,4 @@
-package com.h_fahmy.onboarding_domain
+package com.h_fahmy.profile_domain
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

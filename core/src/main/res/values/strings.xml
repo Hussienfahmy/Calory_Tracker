@@ -60,4 +60,12 @@
     <string name="delete">Delete</string>
     <string name="tracker_overview">Tracker Overview</string>
     <string name="profile">Profile</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="prtein">Protein</string>
+    <string name="percent">%</string>
+    <string name="activityLevel">Activity Level</string>
+    <string name="goal">Goal</string>
 </resources>

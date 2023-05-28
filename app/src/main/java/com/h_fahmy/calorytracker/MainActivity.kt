@@ -3,6 +3,8 @@ package com.h_fahmy.calorytracker
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +14,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +25,6 @@ import androidx.navigation.navArgument
 import com.h_fahmy.calorytracker.navigation.AppBottomNavigation
 import com.h_fahmy.calorytracker.navigation.Route
 import com.h_fahmy.calorytracker.navigation.navigateWithClearBackStack
-import com.h_fahmy.core.domain.preferences.Preferences
 import com.h_fahmy.core_ui.theme.CaloryTrackerTheme
 import com.h_fahmy.onboarding_presentation.activity.ActivityScreen
 import com.h_fahmy.onboarding_presentation.age.AgeScreen
@@ -31,23 +34,22 @@ import com.h_fahmy.onboarding_presentation.height.HeightScreen
 import com.h_fahmy.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.h_fahmy.onboarding_presentation.weight.WeightScreen
 import com.h_fahmy.onboarding_presentation.welcome.WelcomeScreen
+import com.h_fahmy.profile_presentation.profile.ProfileScreen
 import com.h_fahmy.tracker_presentation.search.SearchScreen
 import com.h_fahmy.tracker_presentation.tracker_overview.TrackerOverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
-import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var preferences: Preferences
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val shouldShowOnBoarding = runBlocking { preferences.loadShouldShowOnBoarding() }
+        val shouldShowOnBoarding = runBlocking { viewModel.shouldShowOnBoarding() }
 
         setContent {
             CaloryTrackerTheme(darkTheme = false) {
@@ -171,7 +173,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Route.PROFILE) {
-
+                            ProfileScreen()
                         }
                     }
                 }

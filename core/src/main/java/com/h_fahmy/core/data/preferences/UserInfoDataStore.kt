@@ -8,6 +8,7 @@ import com.h_fahmy.core.domain.model.Gender
 import com.h_fahmy.core.domain.model.GoalType
 import com.h_fahmy.core.domain.model.UserInfo
 import com.h_fahmy.core.domain.preferences.Preferences
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
 /**
@@ -75,6 +76,10 @@ class UserInfoDataStore(
 
     override suspend fun loadUserInfo(): UserInfo {
         return dataStore.data.first()
+    }
+
+    override fun observeUserInfo(): Flow<UserInfo> {
+        return dataStore.data
     }
 
     override suspend fun saveShouldShowOnBoarding(shouldShowOnBoarding: Boolean) {
