@@ -3,7 +3,6 @@ package com.h_fahmy.onboarding_presentation.activity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,9 +19,9 @@ import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.model.ActivityLevel
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.UiEventHandler
+import com.h_fahmy.core_ui.components.ActivityLevelSelector
 import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.onboarding_presentation.components.ActionButton
-import com.h_fahmy.onboarding_presentation.components.SelectableButton
 
 @Composable
 fun ActivityScreen(
@@ -67,35 +66,7 @@ fun ActivityScreenContent(
 
             Spacer(modifier = Modifier.padding(spacing.spaceMedium))
 
-            Row {
-                SelectableButton(
-                    text = stringResource(id = R.string.low),
-                    selected = selectedActivityLevel == ActivityLevel.Low,
-                    onClick = {
-                        onActivityLevelSelected(ActivityLevel.Low)
-                    }
-                )
-
-                Spacer(modifier = Modifier.padding(spacing.spaceSmall))
-
-                SelectableButton(
-                    text = stringResource(id = R.string.medium),
-                    selected = selectedActivityLevel == ActivityLevel.Medium,
-                    onClick = {
-                        onActivityLevelSelected(ActivityLevel.Medium)
-                    }
-                )
-
-                Spacer(modifier = Modifier.padding(spacing.spaceSmall))
-
-                SelectableButton(
-                    text = stringResource(id = R.string.high),
-                    selected = selectedActivityLevel == ActivityLevel.High,
-                    onClick = {
-                        onActivityLevelSelected(ActivityLevel.High)
-                    }
-                )
-            }
+            ActivityLevelSelector(selectedActivityLevel, onActivityLevelSelected)
         }
 
         ActionButton(

@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.h_fahmy.core.domain.preferences.Preferences
 import com.h_fahmy.core.domain.use_case.FilterOutDigits
+import com.h_fahmy.core_ui.domain.use_case.ValidateNutrients
 import com.h_fahmy.core_ui.util.UiEvent
 import com.h_fahmy.core_ui.viewmodel.UiEventViewModel
-import com.h_fahmy.onboarding_domain.use_case.ValidateNutrients
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

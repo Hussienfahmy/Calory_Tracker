@@ -3,7 +3,6 @@ package com.h_fahmy.onboarding_presentation.gender
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,9 +19,9 @@ import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.model.Gender
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.UiEventHandler
+import com.h_fahmy.core_ui.components.GenderSelector
 import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.onboarding_presentation.components.ActionButton
-import com.h_fahmy.onboarding_presentation.components.SelectableButton
 
 @Composable
 fun GenderScreen(
@@ -67,25 +66,7 @@ fun GenderScreenContent(
 
             Spacer(modifier = Modifier.padding(spacing.spaceMedium))
 
-            Row {
-                SelectableButton(
-                    text = stringResource(id = R.string.male),
-                    selected = selectedGender == Gender.Male,
-                    onClick = {
-                        onGenderSelected(Gender.Male)
-                    }
-                )
-
-                Spacer(modifier = Modifier.padding(spacing.spaceSmall))
-
-                SelectableButton(
-                    text = stringResource(id = R.string.female),
-                    selected = selectedGender == Gender.Female,
-                    onClick = {
-                        onGenderSelected(Gender.Female)
-                    }
-                )
-            }
+            GenderSelector(selectedGender, onGenderSelected)
         }
 
         ActionButton(

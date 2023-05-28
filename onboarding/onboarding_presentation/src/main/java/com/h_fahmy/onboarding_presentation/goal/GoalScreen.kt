@@ -3,7 +3,6 @@ package com.h_fahmy.onboarding_presentation.goal
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,9 +19,9 @@ import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core.domain.model.GoalType
 import com.h_fahmy.core_ui.LocalSpacing
 import com.h_fahmy.core_ui.UiEventHandler
+import com.h_fahmy.core_ui.components.GoalTypeSelector
 import com.h_fahmy.core_ui.util.BaseLightPreview
 import com.h_fahmy.onboarding_presentation.components.ActionButton
-import com.h_fahmy.onboarding_presentation.components.SelectableButton
 
 @Composable
 fun GoalScreen(
@@ -67,35 +66,7 @@ fun GoalScreenContent(
 
             Spacer(modifier = Modifier.padding(spacing.spaceMedium))
 
-            Row {
-                SelectableButton(
-                    text = stringResource(id = R.string.lose),
-                    selected = selectedGoalType == GoalType.LoseWeight,
-                    onClick = {
-                        onGoalTypeSelected(GoalType.LoseWeight)
-                    }
-                )
-
-                Spacer(modifier = Modifier.padding(spacing.spaceSmall))
-
-                SelectableButton(
-                    text = stringResource(id = R.string.keep),
-                    selected = selectedGoalType == GoalType.KeepWeight,
-                    onClick = {
-                        onGoalTypeSelected(GoalType.KeepWeight)
-                    }
-                )
-
-                Spacer(modifier = Modifier.padding(spacing.spaceSmall))
-
-                SelectableButton(
-                    text = stringResource(id = R.string.gain),
-                    selected = selectedGoalType == GoalType.GainWeight,
-                    onClick = {
-                        onGoalTypeSelected(GoalType.GainWeight)
-                    }
-                )
-            }
+            GoalTypeSelector(selectedGoalType, onGoalTypeSelected)
         }
 
         ActionButton(

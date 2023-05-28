@@ -1,6 +1,6 @@
-package com.h_fahmy.onboarding_domain.di
+package com.h_fahmy.core_ui.di
 
-import com.h_fahmy.onboarding_domain.use_case.ValidateNutrients
+import com.h_fahmy.core_ui.domain.use_case.ValidateNutrients
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

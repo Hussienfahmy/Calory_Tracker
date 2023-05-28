@@ -1,4 +1,4 @@
-package com.h_fahmy.onboarding_domain.use_case
+package com.h_fahmy.core_ui.domain.use_case
 
 import com.h_fahmy.calorytracker.core.R
 import com.h_fahmy.core_ui.util.UiText

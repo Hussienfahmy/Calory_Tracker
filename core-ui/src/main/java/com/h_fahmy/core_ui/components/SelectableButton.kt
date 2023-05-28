@@ -1,4 +1,4 @@
-package com.h_fahmy.onboarding_presentation.components
+package com.h_fahmy.core_ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
