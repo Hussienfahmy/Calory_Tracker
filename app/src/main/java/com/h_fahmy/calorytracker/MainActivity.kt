@@ -60,7 +60,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
                     bottomBar = {
-                        if (currentRoute != null) {
+                        if (currentRoute != null && when (currentRoute) {
+                                Route.TRACKER_OVERVIEW, Route.PROFILE -> true
+                                else -> false
+                            }
+                        ) {
                             AppBottomNavigation(
                                 currentDestination = currentRoute,
                                 onTrackerOverviewClick = {
