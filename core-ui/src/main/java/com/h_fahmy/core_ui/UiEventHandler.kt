@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 /**
  * base composable for all screens that use UiEvent
+ * @param onSuccess called when the purpose of the screen is done successfully and the screen no longer needed
  */
 @Composable
 fun UiEventHandler(
