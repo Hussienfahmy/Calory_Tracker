@@ -67,80 +67,40 @@ class ProfileViewModel @Inject constructor(
                     }
                 }
 
-                is ProfileEvent.OnCarbRatioChanged -> {
+                is ProfileEvent.OnNutrientsGoalChanged -> {
                     // display the number on the screen but don't save it until validated
                     state = state.copy(
                         userProfile = state.userProfile?.copy(
-                            carbRatio = filterOutDigits(event.carbRatio).toIntOrNull() ?: 0
+                            carbRatio = filterOutDigits(event.carbRatio).toIntOrNull() ?: 0,
+                            proteinRatio = filterOutDigits(event.proteinRatio).toIntOrNull() ?: 0,
+                            fatRatio = filterOutDigits(event.fatRatio).toIntOrNull() ?: 0,
                         )
                     )
 
                     val result = validateNutrients(
                         carbsRatio = event.carbRatio,
-                        proteinRatio = state.userProfile?.proteinRatio.toString(),
-                        fatRatio = state.userProfile?.fatRatio.toString()
-                    )
-
-                    when (result) {
-                        is ValidateNutrients.Result.Error -> {
-                            state = state.copy(invalidCarbRatio = true)
-                        }
-
-                        is ValidateNutrients.Result.Success -> {
-                            state = state.copy(invalidCarbRatio = false)
-                            preferences.saveCarbRatio(result.carbsRatio)
-                        }
-                    }
-                }
-
-                is ProfileEvent.OnProteinRatioChanged -> {
-                    // display the number on the screen but don't save it until validated
-                    state = state.copy(
-                        userProfile = state.userProfile?.copy(
-                            proteinRatio = filterOutDigits(event.proteinRatio).toIntOrNull() ?: 0
-                        )
-                    )
-
-                    val result = validateNutrients(
-                        carbsRatio = state.userProfile?.carbRatio.toString(),
                         proteinRatio = event.proteinRatio,
-                        fatRatio = state.userProfile?.fatRatio.toString()
-                    )
-
-                    when (result) {
-                        is ValidateNutrients.Result.Error -> {
-                            state = state.copy(invalidProteinRatio = true)
-                        }
-
-                        is ValidateNutrients.Result.Success -> {
-                            state = state.copy(invalidProteinRatio = false)
-                            preferences.saveProteinRatio(result.carbsRatio)
-                        }
-                    }
-                }
-
-                is ProfileEvent.OnFatRatioChanged -> {
-                    // display the number on the screen but don't save it until validated
-                    state = state.copy(
-                        userProfile = state.userProfile?.copy(
-                            fatRatio = filterOutDigits(event.fatRatio).toIntOrNull() ?: 0
-                        )
-                    )
-
-                    val result = validateNutrients(
-                        carbsRatio = state.userProfile?.carbRatio.toString(),
-                        proteinRatio = state.userProfile?.proteinRatio.toString(),
                         fatRatio = event.fatRatio
                     )
 
                     when (result) {
                         is ValidateNutrients.Result.Error -> {
-                            state = state.copy(invalidFatRatio = true)
+                            state = state.copy(
+                                invalidCarbRatio = true,
+                                invalidProteinRatio = true,
+                                invalidFatRatio = true,
+                            )
                         }
 
                         is ValidateNutrients.Result.Success -> {
-                            state = state.copy(invalidFatRatio = false)
-                            preferences.saveFatRatio(result.carbsRatio)
+                            state = state.copy(
+                                invalidCarbRatio = false,
+                                invalidProteinRatio = false,
+                                invalidFatRatio = false,
+                            )
+                            preferences.saveCarbRatio(result.carbsRatio)
+                            preferences.saveProteinRatio(result.proteinRatio)
+                            preferences.saveFatRatio(result.fatRatio)
                         }
                     }
                 }

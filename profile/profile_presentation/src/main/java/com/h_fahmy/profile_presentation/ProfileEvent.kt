@@ -11,7 +11,9 @@ sealed class ProfileEvent {
     data class OnWeightChanged(val weight: String) : ProfileEvent()
     data class OnActivityLevelChanged(val activityLevel: ActivityLevel) : ProfileEvent()
     data class OnGoalTypeChanged(val goalType: GoalType) : ProfileEvent()
-    data class OnCarbRatioChanged(val carbRatio: String) : ProfileEvent()
-    data class OnProteinRatioChanged(val proteinRatio: String) : ProfileEvent()
-    data class OnFatRatioChanged(val fatRatio: String) : ProfileEvent()
+    data class OnNutrientsGoalChanged(
+        val carbRatio: String,
+        val proteinRatio: String,
+        val fatRatio: String,
+    ) : ProfileEvent()
 }

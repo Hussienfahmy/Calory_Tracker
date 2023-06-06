@@ -42,9 +42,15 @@ fun ProfileScreen(
             onGenderChanged = { viewModel.onEvent(ProfileEvent.OnGenderChanged(it)) },
             onActivityLevelChanged = { viewModel.onEvent(ProfileEvent.OnActivityLevelChanged(it)) },
             onGoalTypeChanged = { viewModel.onEvent(ProfileEvent.OnGoalTypeChanged(it)) },
-            onCarbRatioChanged = { viewModel.onEvent(ProfileEvent.OnCarbRatioChanged(it)) },
-            onProteinRatioChanged = { viewModel.onEvent(ProfileEvent.OnProteinRatioChanged(it)) },
-            onFatRatioChanged = { viewModel.onEvent(ProfileEvent.OnFatRatioChanged(it)) },
+            onNutrientsGoalChanged = { carbRatio, proteinRatio, fatRatio ->
+                viewModel.onEvent(
+                    ProfileEvent.OnNutrientsGoalChanged(
+                        carbRatio = carbRatio,
+                        proteinRatio = proteinRatio,
+                        fatRatio = fatRatio
+                    )
+                )
+            },
             isCarbInvalid = state.invalidCarbRatio,
             isProteinInvalid = state.invalidProteinRatio,
             isFatInvalid = state.invalidFatRatio
@@ -61,9 +67,7 @@ private fun ProfileScreenContent(
     onGenderChanged: (Gender) -> Unit,
     onActivityLevelChanged: (ActivityLevel) -> Unit,
     onGoalTypeChanged: (GoalType) -> Unit,
-    onCarbRatioChanged: (String) -> Unit,
-    onProteinRatioChanged: (String) -> Unit,
-    onFatRatioChanged: (String) -> Unit,
+    onNutrientsGoalChanged: (carbRatio: String, proteinRatio: String, fatRatio: String) -> Unit,
     isCarbInvalid: Boolean,
     isProteinInvalid: Boolean,
     isFatInvalid: Boolean,
@@ -108,7 +112,13 @@ private fun ProfileScreenContent(
                     title = stringResource(id = R.string.carbs),
                     value = userProfile.carbRatio.toString(),
                     unit = stringResource(id = R.string.percent),
-                    onValueChanged = onCarbRatioChanged,
+                    onValueChanged = {
+                        onNutrientsGoalChanged(
+                            it,
+                            userProfile.proteinRatio.toString(),
+                            userProfile.fatRatio.toString()
+                        )
+                    },
                     error = isCarbInvalid
                 )
 
@@ -116,7 +126,13 @@ private fun ProfileScreenContent(
                     title = stringResource(id = R.string.prtein),
                     value = userProfile.proteinRatio.toString(),
                     unit = stringResource(id = R.string.percent),
-                    onValueChanged = onProteinRatioChanged,
+                    onValueChanged = {
+                        onNutrientsGoalChanged(
+                            userProfile.carbRatio.toString(),
+                            it,
+                            userProfile.fatRatio.toString()
+                        )
+                    },
                     error = isProteinInvalid
                 )
 
@@ -124,7 +140,13 @@ private fun ProfileScreenContent(
                     title = stringResource(id = R.string.fat),
                     value = userProfile.fatRatio.toString(),
                     unit = stringResource(id = R.string.percent),
-                    onValueChanged = onFatRatioChanged,
+                    onValueChanged = {
+                        onNutrientsGoalChanged(
+                            userProfile.carbRatio.toString(),
+                            userProfile.proteinRatio.toString(),
+                            it
+                        )
+                    },
                     error = isFatInvalid
                 )
             }
@@ -181,9 +203,7 @@ fun ProfileScreenContentPreview() {
             onGenderChanged = {},
             onActivityLevelChanged = {},
             onGoalTypeChanged = {},
-            onCarbRatioChanged = {},
-            onProteinRatioChanged = {},
-            onFatRatioChanged = {},
+            onNutrientsGoalChanged = { _, _, _ -> },
             isCarbInvalid = false,
             isProteinInvalid = true,
             isFatInvalid = false
