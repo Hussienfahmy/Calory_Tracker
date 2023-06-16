@@ -28,7 +28,7 @@ fun TrackedFood.toTrackedFoodEntity(): TrackedFoodEntity {
         carbs = carbs,
         fat = fat,
         protein = protein,
-        type = TrackedFoodEntity.Type.valueOf(MealType.BREAKFAST.name),
+        type = TrackedFoodEntity.Type.valueOf(mealType.name),
         amount = 100,
         date = TrackedFoodEntity.Date(
             day = date.dayOfMonth,
